@@ -1,8 +1,23 @@
+# Get the item number from a current item page
+def getItemNumber(context, itemURL):
+    try:
+        context.browser.get(itemURL)
+        elem = context.browser.find_element_by_xpath("//div[@class='product-number']/span")
+        return [int(s) for s in elem.get_attribute('innerHTML').split() if s.isdigit()][0]
+    except:
+        return -1
+
 # Check to see if a product page exists for a given item number
 def productPageExists(context, itemNumber):
     itemURL = 'http://www.monoprice.com/Product?p_id=' + itemNumber
-    context.browser.get(itemURL)
-    return True
+
+    # The site redirects back to the home page instead of showing a 404
+    # if the product page doesn't exist, so we actually need to check
+    # the content of the page
+    if getItemNumber(context, itemURL) == int(itemNumber):
+        return True
+    else:
+        return False
 
 @given('item number {itemNumber} is available')
 def step(context, itemNumber):
