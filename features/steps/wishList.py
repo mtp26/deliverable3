@@ -15,7 +15,6 @@ def step(context):
 def step(context, count):
 
     wishListCount = len(context.browser.find_elements_by_xpath("//table[@class='ma-table']/tbody/tr"))
-    print(wishListCount)
 
     # Assert number of rows of wish list - 2 = number expected.
     assert (wishListCount-2 == int(count))
@@ -39,7 +38,6 @@ def step(context, count):
     wishList = context.browser.find_elements_by_xpath("//table[@class='ma-table']/tbody/tr")
 
     wishListCount = len(wishList)
-    print(wishListCount)
 
     # Assert number of rows of wish list - 2 = number expected.
     assert (wishListCount-2 == int(count))
@@ -61,8 +59,6 @@ def step(context):
 def step(context, count):
 
     quantity = context.browser.find_element_by_xpath("//table[@class='ma-table']/tbody/tr/td/input[@name='p_quantity']").get_attribute('value')
-    print("quantity",quantity)
-    print("count",count)
 
     assert (int(quantity) == int(count))
 
