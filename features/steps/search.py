@@ -42,3 +42,13 @@ def step(context, itemNumber):
         return True
     else:
         return False
+
+@given('item number {itemNumber} is not available')
+def step(context, itemNumber):
+    # Make sure that a poduct page for a supposedly 
+    # non-existent item does not exit
+    assert not productPageExists(context, itemNumber)
+
+@then('zero search results should be displayed')
+def step(context):
+    return True
