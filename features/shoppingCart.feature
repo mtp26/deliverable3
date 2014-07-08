@@ -7,7 +7,6 @@ Scenario: Add a single item to an empty cart
         When we add an item to the cart
         Then the cart page should display that there are 1 items in the cart
 
-
 Scenario: Remove an item from a cart, leaving the cart empty
         Given there is an item in the shopping cart
         When we remove an item from the cart
