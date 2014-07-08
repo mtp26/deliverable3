@@ -1,6 +1,6 @@
 import re
 
-# Link to the item that we're going to use for testing
+# Link to the item that we're using for testing
 itemURL = 'http://www.monoprice.com/Product?c_id=109&cp_id=10904&cs_id=1090407&p_id=10532&seq=1&format=2'
 
 # Link to the cart page
@@ -14,6 +14,15 @@ def getCartItemCount(context):
     # Get the integer value of item count
     itemCount = [int(s) for s in itemCountText.split() if s.isdigit()][0]
     return itemCount
+
+# Helper function to get the item price
+def getItemPrice(context, itemURL):
+    context.browser.implicitly_wait(10)
+    context.browser.get(itemURL)
+    itemPriceText = context.browser.find_element_by_css_selector('.price').get_attribute('innerHTML')
+    # Get only the price value
+    itemPrice = float(re.findall(r'\d+\.\d+', itemPriceText)[0])
+    return itemPrice
 
 @given('the shopping cart is empty')
 def step(context):
@@ -43,8 +52,12 @@ def step(context):
     # Check just to make sure that there actually is an item in the cart
     assert (getCartItemCount(context) == 1)
 
-@when('we remove 1 item from the cart')
+@when('we remove an item from the cart')
 def step(context):
     context.browser.implicitly_wait(10)
     context.browser.get(cartURL)
     context.browser.find_element_by_css_selector('.js-remove-item').click()
+
+@then('should show the sum of the price of the items')
+def step(context):
+    assert (getItemPrice(context,itemURL) == 79.48)
