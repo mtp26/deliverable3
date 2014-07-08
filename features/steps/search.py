@@ -1,3 +1,5 @@
+from selenium.webdriver.common.keys import Keys
+
 # Get the item number from a current item page
 def getItemNumber(context, itemURL):
     try:
@@ -26,8 +28,17 @@ def step(context, itemNumber):
 
 @when('a user searches for item number {itemNumber}')
 def step(context, itemNumber):
-    assert True
+    # Search for the item number by simulating key presses
+    searchURL = 'http:/www.monoprice.com/Search'
+    context.browser.get(searchURL)
+    elem = context.browser.find_element_by_css_selector('.search-input')
+    elem.send_keys(itemNumber + Keys.RETURN)
 
 @then('the page for item number {itemNumber} should be displayed')
 def step(context, itemNumber):
-    assert True
+    # Make sure we were redirected to the item's page
+    currentURL = context.browser.current_url
+    if getItemNumber(context, currentURL) == int(itemNumber):
+        return True
+    else:
+        return False
