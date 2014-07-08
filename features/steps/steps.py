@@ -1,3 +1,5 @@
+import re
+
 @when('we visit google')  
 def step(context):  
    context.browser.get('http://www.google.com')  
@@ -13,6 +15,8 @@ def step(context):
 
 @then('the cart should display one item')
 def step(context):
-    itemCount = context.browser.find_element_by_id('myBagCount').get_attribute('innerHTML')
-    print itemCount
-    assert (itemCount == ' 1 items')
+    itemCountText = context.browser.find_element_by_id('myBagCount').get_attribute('innerHTML')
+
+    # Get the integer value of item count
+    itemCount = [int(s) for s in itemCountText.split() if s.isdigit()][0]
+    assert (itemCount == 1)
