@@ -1,8 +1,10 @@
 import re
+import time
 
 @given(u'the wish list is empty')
 def step(context):
     context.browser.delete_all_cookies()
+    context.browser.refresh()
     assert True
 
 @when('we add an item to the wish list')
@@ -69,12 +71,15 @@ def step(context):
     context.browser.delete_all_cookies()
     context.browser.refresh()
     context.browser.get('http://www.monoprice.com/Product/ProductSavedListUpdate?p_id=10532&p_quantity=1')
-    assert True
 
-@when('we move the item to the shopping cart')
+
+@when('we transfer the item to the cart')
 def step(context):
+    #time.sleep(2)
     context.browser.find_element_by_name('ca_move').click()
     context.browser.find_element_by_xpath("//span[@id='move_tab']/input").click()
+
+
 
 
 @then('the shopping cart should have {count} item')
