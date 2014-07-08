@@ -17,4 +17,4 @@ Scenario: Add an additional item to the cart.
         Given there is an item in the shopping cart
         When we add an item to the cart
         Then the cart page should display that there are 2 items in the cart
-        And  should show the sum of the price of the items
+        And  should show the subtotal of the items
