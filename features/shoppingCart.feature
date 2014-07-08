@@ -1,5 +1,6 @@
-Feature: The ability to add and remove items from a shopping cart 
-         and have the cart display the correct quantities and prices
+Feature: As a customer of Monoprice.com
+         I want to be able to save items to a shopping cart
+         So that I can keep track of what I’m about to purchase
 
 Scenario: Add a single item to an empty cart
         Given the shopping cart is empty
