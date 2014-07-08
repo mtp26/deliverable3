@@ -54,6 +54,7 @@ def step(context):
 
 @when('we add the same item again')
 def step(context):
+    context.browser.refresh()
     context.browser.get('http://www.monoprice.com/Product/ProductSavedListUpdate?p_id=10532&p_quantity=1')
 
 @then('the quantity of the item should be {count}')
