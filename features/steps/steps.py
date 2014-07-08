@@ -10,6 +10,7 @@ def step(context):
 
 @given(u'the shopping cart is empty')
 def step(context):
+    context.browser.delete_all_cookies()
     assert True
 
 @when('we add an item to the cart')
