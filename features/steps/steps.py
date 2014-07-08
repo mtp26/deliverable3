@@ -28,7 +28,7 @@ def step(context):
     context.browser.get(itemURL)
     context.browser.find_element_by_css_selector('.button-yellow-large').click()
 
-@then('the page should display that there is {count} items in the cart')
+@then('the cart page should display that there are {count} items in the cart')
 def step(context, count):
     assert (getCartItemCount(context) == int(count))
 
