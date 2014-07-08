@@ -3,9 +3,13 @@ import re
 # Link to the item that we're going to use for testing
 itemURL = 'http://www.monoprice.com/Product?c_id=109&cp_id=10904&cs_id=1090407&p_id=10532&seq=1&format=2'
 
+# Link to the cart page
+cartURL = 'http://www.monoprice.com/Cart'
+
 # Helper function to get the item count from the shopping cart of monoprice.com
 def getCartItemCount(context):
-    context.browser.get('http://www.monoprice.com/Cart')
+    context.browser.implicitly_wait(10)
+    context.browser.get(cartURL)
     itemCountText = context.browser.find_element_by_id('myBagCount').get_attribute('innerHTML')
     # Get the integer value of item count
     itemCount = [int(s) for s in itemCountText.split() if s.isdigit()][0]
@@ -41,5 +45,6 @@ def step(context):
 
 @when('we remove 1 item from the cart')
 def step(context):
-    context.browser.get('http://www.monoprice.com/Cart')
+    context.browser.implicitly_wait(10)
+    context.browser.get(cartURL)
     context.browser.find_element_by_css_selector('.js-remove-item').click()
