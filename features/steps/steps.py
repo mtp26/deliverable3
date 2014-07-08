@@ -11,7 +11,7 @@ def getCartItemCount(context):
     itemCount = [int(s) for s in itemCountText.split() if s.isdigit()][0]
     return itemCount
 
-@given(u'the shopping cart is empty')
+@given('the shopping cart is empty')
 def step(context):
     # Clear all of the session cookies, which leaves an empty cart
     context.browser.delete_all_cookies()
@@ -19,16 +19,16 @@ def step(context):
     # Check just to make sure that it's actually empty
     assert (getCartItemCount(context) == 0)
 
-@when(u'we add an item to the cart')
+@when('we add an item to the cart')
 def step(context):
     context.browser.get(itemURL)
     context.browser.find_element_by_css_selector('.button-yellow-large').click()
 
-@then(u'the page should display that there is {count} items in the cart')
+@then('the page should display that there is {count} items in the cart')
 def step(context, count):
     assert (getCartItemCount(context) == int(count))
 
-@given(u'there is an item in the shopping cart')
+@given('there is an item in the shopping cart')
 def step(context):
     # Make sure the cart is empty
     context.execute_steps(u'given the shopping cart is empty')
@@ -39,6 +39,7 @@ def step(context):
     # Check just to make sure that there actually is an item in the cart
     assert (getCartItemCount(context) == 1)
 
-@when(u'we remove 1 item from the cart')
+@when('we remove 1 item from the cart')
 def step(context):
-    assert False
+    context.browser.get('http://www.monoprice.com/Cart')
+    context.browser.find_element_by_css_selector('.js-remove-item').click()
