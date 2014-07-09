@@ -16,3 +16,8 @@ Scenario: Searching for a keyword that relates to existing products should retur
         Given items have a keyword of "cable"
         When a user searches for the keyword "cable"
         Then one or more search results should be displayed
+
+Scenario: Searching for a keyword that does not relate to any products should return zero results
+        Given no items have a keyword of "asdfasdfqwertyqwerty"
+        When a user searches for the keyword "asdfasdfqwertyqwerty"
+        Then zero search results should be displayed

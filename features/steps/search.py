@@ -80,3 +80,10 @@ def step(context):
     # Parse out the number of returned items
     result = getIntFromElemText(elem)
     assert (result >= 1)
+
+@given('no items have a keyword of "{itemKeyword}"')
+def step(context, itemKeyword):
+    # We're going to assume that any keyword given is here not related to any existing products
+    # since we don't have an independent way to verify that a keyword for a product doesn't exist
+    # without performing the search that we're testing
+    assert True
