@@ -11,3 +11,8 @@ Scenario: Searching for a non-existent product ID should show zero results
         Given item number 3498948590398 is not available
         When a user searches for item number 3498948590398
         Then zero search results should be displayed
+
+Scenario: Searching for a keyword that relates to existing products should return one or more results
+        Given items have a keyword of "cable"
+        When a user searches for the keyword "cable"
+        Then one or more search results should be displayed
