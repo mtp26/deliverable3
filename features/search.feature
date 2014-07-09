@@ -13,8 +13,8 @@ Scenario: Searching for a non-existent product ID should show zero results
         Then zero search results should be displayed
 
 Scenario: Searching for a keyword that relates to existing products should return one or more results
-        Given items have a keyword of "cable"
-        When a user searches for the keyword "cable"
+        Given item 10532 has a keyword of "speaker"
+        When a user searches for the keyword "speaker"
         Then one or more search results should be displayed
 
 Scenario: Searching for a keyword that does not relate to any products should return zero results

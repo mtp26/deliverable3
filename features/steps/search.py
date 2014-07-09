@@ -63,10 +63,18 @@ def step(context):
     elems = context.browser.find_elements_by_xpath("//td[contains(@style,'font-weight:bold')]/font")
     assert (elems[1].get_attribute('innerHTML') == '0')
 
-@given('items have a keyword of "{itemKeyword}"')
-def step(context, itemKeyword):
+@given('item {itemNumber} has a keyword of "{itemKeyword}"')
+def step(context, itemNumber, itemKeyword):
     # Since monoprice sells cables, we're just going to assume that this is true
-    assert True
+    itemURL = 'http://www.monoprice.com/Product?p_id=' + itemNumber
+    context.browser.get(itemURL)
+
+    # Search all elements for the keyword text
+    try:
+        elem = context.browser.find_element_by_xpath("//*[contains(.,'" + itemKeyword + "')]")
+        assert True
+    except:
+        assert False
 
 @when('a user searches for the keyword "{itemKeyword}"')
 def step(context, itemKeyword):
@@ -75,11 +83,13 @@ def step(context, itemKeyword):
 @then('one or more search results should be displayed')
 def step(context):
     # Find the search result text
-    elem = context.browser.find_element_by_xpath("//div[@id='page-content']/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/span[contains(@style,'margin-left: 5px;')]")
-
-    # Parse out the number of returned items
-    result = getIntFromElemText(elem)
-    assert (result >= 1)
+    try:
+        elem = context.browser.find_element_by_xpath("//div[@id='page-content']/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/span[contains(@style,'margin-left: 5px;')]")
+        # Parse out the number of returned items
+        result = getIntFromElemText(elem)
+        assert (result >= 1)
+    except:
+        assert False
 
 @given('no items have a keyword of "{itemKeyword}"')
 def step(context, itemKeyword):
