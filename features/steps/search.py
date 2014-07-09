@@ -51,4 +51,6 @@ def step(context, itemNumber):
 
 @then('zero search results should be displayed')
 def step(context):
-    return True
+    # Find the search result text and make sure it's zero
+    elems = context.browser.find_elements_by_xpath("//td[contains(@style,'font-weight:bold')]/font")
+    assert (elems[1].get_attribute('innerHTML') == '0')
