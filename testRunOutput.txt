@@ -1,0 +1,79 @@
+Feature: As a customer of Monoprice.com # shoppingCart.feature:1
+  I want to be able to save items to a shopping cart
+  So that I can keep track of what I’m about to purchase
+  Scenario: Add a single item to an empty cart                           # shoppingCart.feature:5
+    Given the shopping cart is empty                                     # steps/shoppingCart.py:48 4.868s
+    When we add an item to the cart                                      # steps/shoppingCart.py:56 5.486s
+    Then the cart page should display that there are 1 items in the cart # steps/shoppingCart.py:61 4.242s
+
+  Scenario: Remove an item from a cart, leaving the cart empty           # shoppingCart.feature:10
+    Given there is an item in the shopping cart                          # steps/shoppingCart.py:65 10.999s
+    When we remove an item from the cart                                 # steps/shoppingCart.py:76 5.187s
+    Then the cart page should display that there are 0 items in the cart # steps/shoppingCart.py:61 2.665s
+
+  Scenario: Add an additional item to the cart.                          # shoppingCart.feature:15
+    Given there is an item in the shopping cart                          # steps/shoppingCart.py:65 13.139s
+    When we add an item to the cart                                      # steps/shoppingCart.py:56 5.438s
+    Then the cart page should display that there are 2 items in the cart # steps/shoppingCart.py:61 3.496s
+    And should show the subtotal of the items                            # steps/shoppingCart.py:82 6.368s
+
+1 feature passed, 0 failed, 0 skipped
+3 scenarios passed, 0 failed, 0 skipped
+10 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 1m1.888s
+
+Feature: As a customer of Monoprice.com # wishList.feature:1
+  I want to be able to save items to a wish list
+  So that I can save purchases for a later time
+  Scenario: Add a single item to an empty wish list                   # wishList.feature:5
+    Given the wish list is empty                                      # steps/wishList.py:4 0.056s
+    When we add an item to the wish list                              # steps/wishList.py:10 3.858s
+    Then the page should display that there is 1 row in the wish list # steps/wishList.py:14 0.443s
+
+  Scenario: Add another of the same item to the wish list  # wishList.feature:10
+    Given the wish list has one item                       # steps/wishList.py:46 4.218s
+    When we add the same item again                        # steps/wishList.py:53 3.861s
+    Then the quantity of the item should be 2              # steps/wishList.py:58 0.425s
+
+  Scenario: Add two different items to a wish list   # wishList.feature:15
+    Given the wish list is blank                     # steps/wishList.py:23 1.859s
+    When we add two different items to the wish list # steps/wishList.py:29 5.056s
+    Then the wish list should display 2 rows         # steps/wishList.py:35 0.300s
+
+  Scenario: Move one item to shopping cart    # wishList.feature:20
+    Given the wish list has 1 item            # steps/wishList.py:66 3.821s
+    When we transfer the item to the cart     # steps/wishList.py:73 3.763s
+    Then the shopping cart should have 1 item # steps/wishList.py:82 0.494s
+
+1 feature passed, 0 failed, 0 skipped
+4 scenarios passed, 0 failed, 0 skipped
+12 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m28.155s
+
+Feature: As a customer of Monoprice.com # search.feature:1
+  I want to be able to search for products by keyword and product number
+  So that I can find what I may want to purchase
+  Scenario: Searching for a specific product number should take the user directly to the item's page  # search.feature:5
+    Given item number 10532 is available                                                              # steps/search.py:38 4.138s
+    When a user searches for item number 10532                                                        # steps/search.py:43 1.354s
+    Then the page for item number 10532 should be displayed                                           # steps/search.py:47 3.296s
+
+  Scenario: Searching for a non-existent product ID should show zero results  # search.feature:10
+    Given item number 3498948590398 is not available                          # steps/search.py:57 11.426s
+    When a user searches for item number 3498948590398                        # steps/search.py:43 1.171s
+    Then zero search results should be displayed                              # steps/search.py:63 1.337s
+
+  Scenario: Searching for a keyword that relates to existing products should return one or more results  # search.feature:15
+    Given item 10532 has a keyword of "speaker"                                                          # steps/search.py:70 2.814s
+    When a user searches for the keyword "speaker"                                                       # steps/search.py:84 1.283s
+    Then one or more search results should be displayed                                                  # steps/search.py:88 2.253s
+
+  Scenario: Searching for a keyword that does not relate to any products should return zero results  # search.feature:20
+    Given no items have a keyword of "asdfasdfqwertyqwerty"                                          # steps/search.py:100 0.000s
+    When a user searches for the keyword "asdfasdfqwertyqwerty"                                      # steps/search.py:84 1.282s
+    Then zero search results should be displayed                                                     # steps/search.py:63 1.346s
+
+1 feature passed, 0 failed, 0 skipped
+4 scenarios passed, 0 failed, 0 skipped
+12 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m31.700s
